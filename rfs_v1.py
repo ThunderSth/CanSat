@@ -15,10 +15,7 @@ acceleration_calibration = [0,0,0]
 gyro_calibration = [0,0,0]
 
 
-def calibrate():
-    acceleration_calibration = [0,0,0]
-    gyro_calibration = [0,0,0]
-    
+def calibrate():    
     acceleration_calibration.append(0-imu.acceleration[0])
     acceleration_calibration.append(0-imu.acceleration[1])
     acceleration_calibration.append(9.82-imu.acceleration[2])
@@ -26,15 +23,17 @@ def calibrate():
     gyro_calibration.append(0-imu.gyro[0])
     gyro_calibration.append(0-imu.gyro[1])
     gyro_calibration.append(0-imu.gyro[2])
-
+    print(acceleration_calibration,gyro_calibration)
 
 BUTTON_HOLD_TIME = 1
 started_holding = 0
 
 while True:
     time.sleep(0.2)
-    if switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
+    if not switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
         print("calibrating")
+        acceleration_calibration = []
+        gyro_calibration = []
         calibrate()
         started_holding = time.time()
     else:
