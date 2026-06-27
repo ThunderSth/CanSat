@@ -29,7 +29,7 @@ BUTTON_HOLD_TIME = 1
 started_holding = 0
 
 while True:
-    time.sleep(0.2)
+    time.sleep(0.1)
     if not switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
         print("calibrating")
         acceleration_calibration = []
