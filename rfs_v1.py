@@ -2,9 +2,9 @@ import board
 import time
 import adafruit_mpu6050
 import digitalio
-
+import adafruit_bmp280
 i2c = board.I2C()
-imu = adafruit_mpu6050.MPU6050(i2c)
+imu = adafruit_mpu6050.MPU6050(i2c,address=0x68)
 
 
 switch = digitalio.DigitalInOut(board.D10)
