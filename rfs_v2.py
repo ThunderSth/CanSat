@@ -20,6 +20,7 @@ acceleration_calibration_1 = [0,0,0]
 acceleration_calibration_2 = [0,0,0]
 gyro_calibration_1 = [0,0,0]
 gyro_calibration_2 = [0,0,0]
+altitude_calibration = 0
 
 BUTTON_HOLD_TIME = 1
 started_holding = 0
@@ -58,21 +59,17 @@ while True:
         
         calibrate(accelerometer1,acceleration_calibration_1,gyro_calibration_1)
         calibrate(accelerometer2,acceleration_calibration_2,gyro_calibration_2)
+        
+        altitude_calibration = 0-bmp.altitude
 
         started_holding = time.time()
 
     else:
         #Barometer stuff
-        print(f"Temperature: {bmp.temperature:.1f} °C")
-        print(f"Pressure: {bmp.pressure:.1f} hPa")
-
+        print(f"Altitude: {bmp.altitude+altitude_calibration}")
         #Acceleration/gyro
-        print(accelerometer1.acceleration[2])
-        print(accelerometer2.acceleration[2 ])
         print(f"Acceleration x: {get_averaged_acceleration(0)} m/s^2, Acceleration y:{get_averaged_acceleration(1)} m/s^2, Acceleration z: {get_averaged_acceleration(2)} m/s^2")
         print(f"Gyro x: {get_averaged_gyro(0)} rad/s, Gyro y:{get_averaged_gyro(1)} rad/s, Gyro z: {get_averaged_gyro(2)} rad/s \n")
-
-
 
 #X = Left/Right Y=Forward/Back Z = Up/Down
 #Gyro 1 = Pitch 2 = Roll 3 = Yaw
