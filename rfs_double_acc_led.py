@@ -11,11 +11,18 @@ red = pwmio.PWMOut(board.D11)
 green = pwmio.PWMOut(board.D12)
 blue = pwmio.PWMOut(board.D13)
 
-GREEN   = (0, 65535, 0) # Calibration Complete
-BLUE    = (0, 0, 65535) # Booting
-YELLOW  = (65535, 65535, 0) # Ready for calibration
-PURPLE  = (65535, 0, 65535) # Calibration in process
-WHITE   = (65535, 65535, 65535)
+RED         = (65535,     0,     0)
+ORANGE      = (65535, 32768,     0)
+YELLOW      = (65535, 65535,     0)
+LIME        = (32768, 65535,     0)
+GREEN       = (    0, 65535,     0)
+TURQUOISE   = (    0, 65535, 32768)
+CYAN        = (    0, 65535, 65535)
+SKY_BLUE    = (15000, 45000, 65535)
+BLUE        = (    0,     0, 65535)
+PURPLE      = (32768,     0, 65535)
+MAGENTA     = (65535,     0, 65535)
+PINK        = (65535, 15000, 35000)
 
 def set_color(color):
     red.duty_cycle = color[0]
@@ -27,7 +34,7 @@ i2c = busio.I2C(board.SCL, board.SDA)
 bmp = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
 accelerometer1 = adafruit_mpu6050.MPU6050(i2c)
 accelerometer2 = adafruit_mpu6050.MPU6050(i2c,address=0x68)
-set_color(BLUE) 
+set_color(BLUE)
 time.sleep(3)
 
 #Calibration button
@@ -73,6 +80,7 @@ while True:
     if not switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
         print("calibrating")
         set_color(PURPLE)
+        time.sleep(2)
 
         acceleration_calibration_1 = []
         acceleration_calibration_2 = []
