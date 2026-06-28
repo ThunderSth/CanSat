@@ -73,7 +73,6 @@ while True:
     if not switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
         print("calibrating")
         set_color(PURPLE)
-        time.sleep(3)
 
         acceleration_calibration_1 = []
         acceleration_calibration_2 = []
