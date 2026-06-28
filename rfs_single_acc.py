@@ -26,7 +26,7 @@ started_holding = 0
 def get_acceleration(position):
     return (imu.acceleration[position]+acceleration_calibration[position])
 def get_gyro(position):
-    return (imu.gyro[position]+acceleration_calibration[position])
+    return (imu.gyro[position]+gyro_calibration[position])
 
 def calibrate():    
     acceleration_calibration.append(0-imu.acceleration[0])
