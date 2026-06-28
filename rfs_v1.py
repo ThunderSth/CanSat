@@ -14,15 +14,15 @@ switch.switch_to_input(pull=digitalio.Pull.UP)
 acceleration_calibration = [0,0,0]
 gyro_calibration = [0,0,0]
 
-
-def calibrate():    
+def calibrate():
     acceleration_calibration.append(0-imu.acceleration[0])
     acceleration_calibration.append(0-imu.acceleration[1])
     acceleration_calibration.append(9.82-imu.acceleration[2])
+    
+    
+    for i in range(3):
+        gyro_calibration.append(0-imu.gyro[i])
 
-    gyro_calibration.append(0-imu.gyro[0])
-    gyro_calibration.append(0-imu.gyro[1])
-    gyro_calibration.append(0-imu.gyro[2])
     print(acceleration_calibration,gyro_calibration)
 
 BUTTON_HOLD_TIME = 1
