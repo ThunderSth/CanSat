@@ -88,6 +88,21 @@ def calibrate(imu,acceleration_calibration,gyro_calibration):
 
     print(acceleration_calibration,gyro_calibration)
 
+acc_x_1 = 0
+acc_y_1 = 0
+acc_z_1 = 0
+
+acc_x_2 = 0
+acc_y_2 = 0
+acc_z_2 = 0
+
+gyro_x_1 = 0
+gyro_y_1 = 0
+gyro_z_1 = 0
+
+gyro_x_2 = 0
+gyro_y_2 = 0
+gyro_z_2 = 0
 
 
 set_color(YELLOW)
@@ -122,21 +137,10 @@ while True:
         
         time.sleep(0.01)
 
-        acc_x_1 = accelerometer1.acceleration[0]+acceleration_calibration_1[0]
-        acc_y_1 = accelerometer1.acceleration[1]+acceleration_calibration_1[1]
-        acc_z_1 = accelerometer1.acceleration[2]+acceleration_calibration_1[2]
-
-        acc_x_2 = accelerometer2.acceleration[0]+acceleration_calibration_2[0]
-        acc_y_2 = accelerometer2.acceleration[1]+acceleration_calibration_2[1]
-        acc_z_2 = accelerometer2.acceleration[2]+acceleration_calibration_2[2]
-
-        gyro_x_1 = accelerometer1.gyro[0]+gyro_calibration_1[0]
-        gyro_y_1 = accelerometer1.gyro[1]+gyro_calibration_1[1]
-        gyro_z_1 = accelerometer1.gyro[2]+gyro_calibration_1[2]
-
-        gyro_x_2 = accelerometer2.gyro[0]+gyro_calibration_2[0]
-        gyro_y_2 = accelerometer2.gyro[1]+gyro_calibration_2[1]
-        gyro_z_2 = accelerometer2.gyro[2]+gyro_calibration_2[2]
+        acc_x_1, acc_y_1, acc_z_1 = accelerometer1.acceleration
+        gyro_x_1, gyro_y_1, gyro_z_1 = accelerometer1.gyro
+        acc_x_2, acc_y_2, az2 = accelerometer2.acceleration
+        gyro_x_2, gyro_y_2, gyro_z_2 = accelerometer2.gyro
 
 
         write_data(f"{time.monotonic()-start_time},{acc_x_1},{acc_y_1},{acc_z_1},{acc_x_2},{acc_y_2},{acc_z_2},{gyro_x_1},{gyro_x_1},{gyro_z_1},{gyro_x_2},{gyro_x_2},{gyro_z_2},{bmp.altitude},{bmp.temperature}")
