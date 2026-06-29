@@ -38,7 +38,7 @@ def write_data(message):
         file.write(message)
         file.write("\n")
 
-write_data("time,acc_x_1,acc_y_1,acc_z_1_1,acc_x_2,acc_y_2,acc_z_1_2,gyro_1_1,gyro_2_1,gyro_3_1,gyro_1_2,gyro_2_2,gyro_3_2,altitue,temperature")
+write_data("time,acc_x_1,acc_y_1,acc_z_1_1,acc_x_2,acc_y_2,acc_z_1_2,gyro_1_1,gyro_2_1,gyro_3_1,gyro_1_2,gyro_2_2,gyro_3_2,altitude,temperature")
 
 
 #Device setup
