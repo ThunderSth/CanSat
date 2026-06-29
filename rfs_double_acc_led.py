@@ -11,6 +11,10 @@ red = pwmio.PWMOut(board.D11)
 green = pwmio.PWMOut(board.D12)
 blue = pwmio.PWMOut(board.D13)
 
+elapsed_time = 0
+
+time_delay = 0.1
+
 RED         = (65535,     0,     0)
 ORANGE      = (65535, 32768,     0)
 YELLOW      = (65535, 65535,     0)
@@ -28,6 +32,14 @@ def set_color(color):
     red.duty_cycle = color[0]
     green.duty_cycle = color[1]
     blue.duty_cycle = color[2]
+
+def write_data(message):
+    with open("/data.csv", "a") as file:
+        file.write(message)
+        file.write("\n")
+
+write_data("time,acc_x_1,acc_y_1,acc_z_1_1,acc_x_2,acc_y_2,acc_z_1_2,gyro_1_1,gyro_2_1,gyro_3_1,gyro_1_2,gyro_2_2,gyro_3_2,altitue,temperature")
+
 
 #Device setup
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -72,10 +84,13 @@ def calibrate(imu,acceleration_calibration,gyro_calibration):
 
 
 set_color(YELLOW)
+
+#time,acc_x,acc_y,acc_z,gyro_1,gyro_2,gyro_3,altitue,temperature
+
 while True:
 
-    time.sleep(1)
-
+    time.sleep(time_delay)
+    elapsed_time+=time_delay
     #Calibrate
     if not switch.value and time.time()-started_holding > BUTTON_HOLD_TIME:
         print("calibrating")
@@ -99,8 +114,28 @@ while True:
         #Barometer stuff
         print(f"Altitude: {bmp.altitude+altitude_calibration}")
         #Acceleration/gyro
-        print(f"Acceleration x: {get_averaged_acceleration(0)} m/s^2, Acceleration y:{get_averaged_acceleration(1)} m/s^2, Acceleration z: {get_averaged_acceleration(2)} m/s^2")
-        print(f"Gyro x: {get_averaged_gyro(0)} rad/s, Gyro y:{get_averaged_gyro(1)} rad/s, Gyro z: {get_averaged_gyro(2)} rad/s \n")
+
+
+        acc_x_1 = accelerometer1.acceleration[0]+acceleration_calibration_1[0]
+        acc_y_1 = accelerometer1.acceleration[1]+acceleration_calibration_1[1]
+        acc_z_1 = accelerometer1.acceleration[2]+acceleration_calibration_1[2]
+
+        acc_x_2 = accelerometer2.acceleration[0]+acceleration_calibration_2[0]
+        acc_y_2 = accelerometer2.acceleration[1]+acceleration_calibration_2[1]
+        acc_z_2 = accelerometer2.acceleration[2]+acceleration_calibration_2[2]
+
+        gyro_x_1 = accelerometer1.gyro[0]+gyro_calibration_1[0]
+        gyro_y_1 = accelerometer1.gyro[1]+gyro_calibration_1[1]
+        gyro_z_1 = accelerometer1.gyro[2]+gyro_calibration_1[2]
+
+        gyro_x_2 = accelerometer2.gyro[0]+gyro_calibration_2[0]
+        gyro_y_2 = accelerometer2.gyro[1]+gyro_calibration_2[1]
+        gyro_z_2 = accelerometer2.gyro[2]+gyro_calibration_2[2]
+
+
+        write_data(f"{elapsed_time},{acc_x_1},{acc_y_1},{acc_z_1},{acc_x_2},{acc_y_2},{acc_z_2},{gyro_x_1},{gyro_x_1},{gyro_z_1},{gyro_x_2},{gyro_x_2},{gyro_z_2},{bmp.altitude},{bmp.temperature}")
+        #print(f"Acceleration x: {get_averaged_acceleration(0)} m/s^2, Acceleration y:{get_averaged_acceleration(1)} m/s^2, Acceleration z: {get_averaged_acceleration(2)} m/s^2")
+        #print(f"Gyro x: {get_averaged_gyro(0)} rad/s, Gyro y:{get_averaged_gyro(1)} rad/s, Gyro z: {get_averaged_gyro(2)} rad/s \n")
 
 #X = Left/Right Y=Forward/Back Z = Up/Down
 #Gyro 1 = Pitch 2 = Roll 3 = Yaw
