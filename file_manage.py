@@ -1,5 +1,5 @@
 def write_data(message):
-    with open("/data.txt", "a") as file:
+    with open("/data.csv", "a") as file:
         file.write(message)
         file.write("\n")
 
