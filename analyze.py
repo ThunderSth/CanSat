@@ -1,19 +1,13 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation as R
 
-df = pd.read_csv("data.csv")
+# Load data
+df = pd.read_csv("41986.csv")
+df_2 = pd.read_csv("39277.csv")
 
 df.plot("time","altitude")
-
-df.plot("time","acc_z_1_1")
-
-df.plot("time","gyro_1_1")
-
-df.plot("time","temperature")
-
-
-#df.plot.scatter("year","ndvi")
-
-#df["ndvi"].hist(bins=3)
+df_2.plot("time","altitude")
 
 plt.show()
